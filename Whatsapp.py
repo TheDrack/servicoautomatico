@@ -78,7 +78,7 @@ def CriarFila():
         global pastaArquivoSelecionado
         
         # Seleciona o arquivo
-        arquivo_selecionado = filedialog.askopenfilename(initialdir='I:\__GIT_jesus__\Listas Disparos', title="Selecione o arquivo", filetypes=(("Excel", "*.xlsx"), ("Excel", "*.xls"), ("Excel", "*.xlsm")))
+        arquivo_selecionado = filedialog.askopenfilename(initialdir=r'I:\__GIT_jesus__\Listas Disparos', title="Selecione o arquivo", filetypes=(("Excel", "*.xlsx"), ("Excel", "*.xls"), ("Excel", "*.xlsm")))
         #pasta do arquivo selecionado
         pastaArquivoSelecionado = os.path.dirname(arquivo_selecionado)
 
@@ -324,7 +324,8 @@ def LerFila():
                     #se existir, ler a planilha, adicionar o cpf e numero enviado, e salvar a planilha
                     Falha = pd.concat([Falha, pd.DataFrame({'CPF': cpf,'Telefone1': telefone1,'Telefone2': telefone2,'Telefone3': telefone3}, index=[0])])
                     Falha.to_excel(PlanilhaFalha, index=False)
-            break
+            # Salvar planilha de sucessos após processar a fila
+            Sucedidos.to_excel(PlanilhaSucedidos, index=False)
             
 
         time.sleep(5)
