@@ -1,0 +1,5 @@
+requests
+websockets
+mysql-connector-python
+selenium
+python-dotenv
