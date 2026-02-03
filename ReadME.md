@@ -1,25 +1,81 @@
-​🤖 Engenharia de Automação & Data Pipeline
-​Repositório focado em soluções de automação de alto nível, transitando desde RPA (Robotic Process Automation) tradicional até sistemas complexos de migração de dados e IA.
-​📂 Estrutura do Repositório
-​O projeto está organizado de forma evolutiva, cobrindo diferentes pilares da automação:
-​00. Protótipos Históricos
-​Registro da evolução das automações, contendo scripts iniciais e provas de conceito que fundamentaram os sistemas atuais.
-​01. Gerenciador de Robôs (Simples)
-​Versão inicial de orquestração de scripts, focada em execução sequencial e controle básico de logs.
-​02. Gerenciador de Robôs Pro
-​Interface gráfica (GUI) desenvolvida em Tkinter com orquestração de threads. Permite gerenciar, monitorar e executar múltiplos processos Python simultaneamente de forma assíncrona.
-​03. High-Volume Data Migration
-​Pipeline focado em performance para movimentação de grandes volumes de dados. Implementa estratégias de batch processing e tratamento de erros para garantir a integridade da migração.
-​04. SnakeIA - Aprendizado por Reforço
-​Estudo de Inteligência Artificial aplicada, utilizando TensorFlow e DQN (Deep Q-Network) para treinar um agente autônomo.
-​🚀 Destaque: Real-Time WhatsApp Bridge
-​Localizado na raiz (whatsapp_bridge.py), este é o motor de integração do repositório. Uma arquitetura híbrida que utiliza:
-​Selenium: Para autenticação e bypass de segurança.
-​Requests & WebSockets: Para captura e orquestração de metadados em tempo real com asyncio.
-​LGPD Compliant: Implementação de pseudonimização e proteção de dados sensíveis.
-​🛠️ Stack Tecnológica
-​Linguagem: Python 3.9+
-​IA & Dados: TensorFlow, NumPy, Pandas.
-​Automação & Web: Selenium, Asyncio, Websockets.
-​Interface: Tkinter (CustomTkinter).
-​Infra: Docker, Environment Variables (.env), Logging Estruturado.
+# 🤖 Engenharia de Automação & Data Pipeline
+
+Repositório focado em soluções de automação de alto nível, transitando desde RPA tradicional até sistemas de migração de dados e IA com aprendizado por reforço.
+
+---
+
+## 📂 Estrutura do Projeto
+
+O repositório está organizado por módulos de complexidade e finalidade:
+
+* **`00_Protótipos_Historicos`**: Legado e evolução das primeiras automações.
+* **`01_Gerenciador_Robos_Simples`**: Gerenciamento básico de scripts RPA.
+* **`02_Gerenciador_Robos_Pro`**: Orquestrador avançado com interface **Tkinter** e multithreading.
+* **`03_High-Volume-Data-Migration`**: Pipelines de ETL e migração massiva de dados com foco em performance.
+* **`04_SnakeIA`**: Agente de IA treinado via Deep Q-Learning (**TensorFlow**).
+* **`whatsapp_bridge.py`**: Bridge de comunicação em tempo real via WebSockets e Selenium.
+
+---
+
+## 🚀 Tecnologias em Destaque
+
+### Real-Time WhatsApp Bridge
+Arquitetura híbrida para integração de mensagens:
+- **Selenium & Asyncio**: Automação assíncrona.
+- **WebSockets**: Captura de eventos em tempo real.
+- **LGPD Compliant**: Tratamento ético e seguro de dados.
+
+### SnakeIA (RL)
+Estudo de **Reinforcement Learning**:
+- Implementação de rede neural para tomada de decisão autônoma.
+- Framework: TensorFlow.
+
+---
+
+## 🛠️ Stack Tecnológica
+- **Linguagem:** Python 3.9+
+- **Bibliotecas:** TensorFlow, Selenium, Asyncio, Websockets, Pandas.
+- **Interface:** Tkinter / CustomTkinter.
+- **DevOps:** Docker, `.env` (gestão de secrets), Logging estruturado.
+
+---
+
+## 🔧 Configuração e Instalação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/seu-usuario/seu-repo.git](https://github.com/seu-usuario/seu-repo.git)
+
+2. **Configure o ambiente:**
+   ```bash
+   cp .env.example .env
+# Edite o .env com suas credenciais
+
+3. **Instale as dependências:**
+   ```bash
+   pip install -r requirements.txt
+
+---
+
+### 2. `requirements.txt` (Consolidado)
+Este arquivo deve conter todas as bibliotecas necessárias para rodar tanto a IA quanto o Bridge e a Interface. 
+
+```text
+# Automação e Web
+selenium
+websockets
+requests
+asyncio
+
+# Inteligência Artificial e Dados
+tensorflow>=2.10.0
+numpy
+pandas
+
+# Interface e Sistema
+customtkinter
+python-dotenv
+mysql-connector-python
+
+# Utilitários
+logging
