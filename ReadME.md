@@ -17,6 +17,12 @@ Mais do que projetos isolados, este repositório representa uma **linha de evolu
 
 ---
 
+## 🛠️ Arquitetura e Boas Práticas
+- **Programação Assíncrona:** Implementação de `asyncio` e `websockets` para alta performance em tempo real.
+- **Tipagem Estática (Type Hinting):** Código documentado e seguro, facilitando a manutenção.
+- **Segurança (LGPD):** Anonimização de dados sensíveis em conformidade com as leis vigentes.
+- **CI/CD Automatizado:** Garantia de qualidade via GitHub Actions.
+
 ## 🧠 Áreas de Atuação Exploradas
 
 * **Automação de Processos:** RPA e scripts inteligentes.
@@ -65,6 +71,7 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
 Este projeto destaca-se pela complexidade arquitetural e pelos desafios reais envolvidos em integrações sensíveis e orientadas a eventos.
 
 ---
+
 
 ## 🛠️ Stack Tecnológica
 
