@@ -1,5 +1,3 @@
-
-
 from re import T
 from tkinter import *
 from tkinter import mainloop
