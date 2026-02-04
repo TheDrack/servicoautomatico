@@ -1,0 +1,22 @@
+# Usa uma imagem leve do Python
+FROM python:3.9-slim
+
+# Instala dependências do sistema necessárias para Selenium e áudio
+RUN apt-get update && apt-get install -y \
+    chromium-driver \
+    libasound2-dev \
+    portaudio19-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Define o diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copia o requirements.txt e instala as bibliotecas
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia todo o resto do código
+COPY . .
+
+# Comando para rodar o seu bridge principal por padrão
+CMD ["python", "whatsapp_bridge.py"]
