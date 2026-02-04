@@ -32,9 +32,9 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
 ├── 02_Gerenciador_Robos_Pro → Orquestração, GUI, concorrência
 ├── 03_High-Volume-Data-Migration → ETL e migração massiva
 ├── 04_SnakeIA → Reinforcement Learning
-
-** Cada projeto possui seu próprio README.md, contendo explicações técnicas, arquitetura e instruções específicas de execução.**
 ```
+** Cada projeto possui seu próprio README.md, contendo explicações técnicas, arquitetura e instruções específicas de execução.**
+
 ---
 ## 🚀 Projeto em Destaque
 
