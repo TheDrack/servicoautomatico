@@ -1,74 +1,109 @@
-import mysql.connector
-import subprocess
 import os
+import subprocess
+import logging
+import mysql.connector
 from tqdm import tqdm
+from contextlib import closing
+from dotenv import load_dotenv
 
-# --- CONFIGURAÇÃO MANUAL ---
-MDB_PATH = r'\\192.168.2.214\mis\--BASE DADOS--\Conv_SQL\base.mdb'
-TABLE_NAME = 'minha_tabela'
+
+# ================= ENV =================
+load_dotenv()
+
+MDB_PATH = os.getenv("MDB_PATH")
+TABLE_NAME = os.getenv("TABLE_NAME")
+BATCH_SIZE = int(os.getenv("BATCH_SIZE", 1000))
 
 DB_CONFIG = {
-    "host": "127.0.0.1",
-    "user": "root",
-    "password": "",
-    "database": "aros_nova",
+    "host": os.getenv("DB_HOST"),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASS"),
+    "database": os.getenv("DB_NAME"),
     "autocommit": False
 }
 
-BATCH_SIZE = 1000  # Commit estratégico para performance e segurança
 
+# ================= LOG =================
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+
+# ================= MIGRATION =================
 def run_migration():
-    print(f"[*] Operação: Migração de Alta Volumetria | Tabela: '{TABLE_NAME}'")
+    if not MDB_PATH or not TABLE_NAME:
+        logging.critical("MDB_PATH ou TABLE_NAME não configurados no .env")
+        return
 
-    try:
-        conn = mysql.connector.connect(**DB_CONFIG)
-        cursor = conn.cursor()
-    except Exception as e:
-        print(f"[!] Falha na conexão MySQL: {e}"); return
-
-    insert_count = 0
-    
-    # Popen com PIPE: O dado flui direto do MDB para o MySQL via memória
-    process = subprocess.Popen(
-        ['mdb-export', '-I', 'mysql', MDB_PATH, TABLE_NAME],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE, # Captura erros do mdb-tools
-        text=True,
-        bufsize=1
+    logging.info(
+        f"Migração iniciada | Tabela: '{TABLE_NAME}' | Batch: {BATCH_SIZE}"
     )
 
     try:
-        # Tqdm consome o generator do stdout
-        for line in tqdm(process.stdout, desc="Processando Pipeline", unit=" rows"):
-            query = line.strip()
-            if not query.startswith("INSERT INTO"):
-                continue
+        conn = mysql.connector.connect(**DB_CONFIG)
+    except mysql.connector.Error as e:
+        logging.error(f"Falha na conexão MySQL: {e}")
+        return
 
-            try:
-                cursor.execute(query)
-                insert_count += 1
-                
-                if insert_count % BATCH_SIZE == 0:
-                    conn.commit()
-            except mysql.connector.Error as e:
-                print(f"\n[!] Erro de Integridade/Sintaxe: {e}")
-                continue
+    insert_count = 0
+    batch_counter = 0
 
-        conn.commit()
-        
-        # Verifica se o mdb-export reportou erro no stderr
-        _, stderr = process.communicate()
-        if process.returncode != 0:
-            print(f"\n[!] Erro no mdb-export: {stderr}")
+    with closing(conn), closing(conn.cursor()) as cursor:
 
-        print(f"\n[OK] Finalizado. {insert_count} registros processados.")
+        process = subprocess.Popen(
+            ['mdb-export', '-I', 'mysql', MDB_PATH, TABLE_NAME],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            bufsize=1
+        )
 
-    except Exception as e:
-        print(f"\n[!] Abortado por erro crítico: {e}")
-        conn.rollback()
-    finally:
-        cursor.close()
-        conn.close()
+        try:
+            for line in tqdm(
+                process.stdout,
+                desc="Pipeline MDB → MySQL",
+                unit=" rows"
+            ):
+                query = line.strip()
 
+                if not query.startswith("INSERT INTO"):
+                    continue
+
+                try:
+                    cursor.execute(query)
+                    insert_count += 1
+                    batch_counter += 1
+
+                    if batch_counter >= BATCH_SIZE:
+                        conn.commit()
+                        batch_counter = 0
+
+                except mysql.connector.Error as e:
+                    logging.warning(f"Registro ignorado (erro SQL): {e}")
+                    conn.rollback()
+                    batch_counter = 0
+
+            conn.commit()
+
+            stderr = process.stderr.read()
+            if process.returncode not in (0, None):
+                logging.error(f"Erro no mdb-export: {stderr.strip()}")
+
+            logging.info(
+                f"Migração concluída | Registros inseridos: {insert_count}"
+            )
+
+        except Exception as e:
+            logging.critical(f"Erro crítico no pipeline: {e}")
+            conn.rollback()
+
+        finally:
+            process.stdout.close()
+            process.stderr.close()
+            process.wait(timeout=10)
+
+
+# ================= ENTRYPOINT =================
 if __name__ == "__main__":
     run_migration()
