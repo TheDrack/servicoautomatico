@@ -65,7 +65,7 @@ Se você tem o Docker instalado, execute:
 ### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
 1. **​Clone o repositório:**
-​   ```
+   ```bash
    git clone [https://github.com/TheDrack/servicoautomatico.git](https://github.com/TheDrack/servicoautomatico.git)
 
 
@@ -86,6 +86,7 @@ Evolução técnica
 Decisões arquiteturais
 Soluções para problemas reais
 Ele reflete um perfil voltado a engenharia, não apenas implementação.
+
 👤 Autor
 Projeto desenvolvido por Jesus Anhaia
 Perfil focado em automação, engenharia de sistemas e IA aplicada.
