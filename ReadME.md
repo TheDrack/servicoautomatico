@@ -58,14 +58,14 @@ Arquitetura híbrida para integração de mensagens:
 
 ### 🐳 Rodando com Docker (Recomendado)
 Se você tem o Docker instalado, execute:
-```bash
-docker-compose up --build
-```
+  ```bash
+  docker-compose up --build
+
 
 ### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
-​Clone o repositório:
-​<!-- end list -->
+1. **​Clone o repositório:**
+​   ```bash
    git clone [https://github.com/TheDrack/servicoautomatico.git](https://github.com/TheDrack/servicoautomatico.git)
 
 2. **Configure o ambiente:**
