@@ -62,7 +62,7 @@ Se você tem o Docker instalado, execute:
 docker-compose up --build
 ```
 
-###🐍 Instalação Manual
+### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
 ​Clone o repositório:
 ​<!-- end list -->
