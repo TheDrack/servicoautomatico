@@ -66,8 +66,7 @@ docker-compose up --build
 ​Caso prefira rodar localmente:
 ​Clone o repositório:
 ​<!-- end list -->
-   git clone [https://github.com/seu-usuario/servicoautomatico.git](https://github.com/seu-usuario/servicoautomatico.git)
-
+   git clone [https://github.com/TheDrack/servicoautomatico.git](https://github.com/TheDrack/servicoautomatico.git)
 
 2. **Configure o ambiente:**
    ```bash
