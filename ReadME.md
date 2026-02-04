@@ -46,13 +46,14 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
 ## 🚀 Projeto em Destaque: Real-Time WhatsApp Bridge
 
 ### Arquitetura do Sistema
-```mermaid
-graph TD
+   ```mermaid
+   graph TD
     A[Mensagem Recebida] --&gt; B(Captura via Selenium)
     B --&gt; C{Processamento Async}
     C --&gt; D[Socket de Saída]
     C --&gt; E[Log Estruturado]
     D --&gt; F[Interface Final]
+<!-- end list -->
 
 **Características:**
 - **Selenium & Asyncio:** Automação assíncrona e controle de fluxo.
