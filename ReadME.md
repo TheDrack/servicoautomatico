@@ -48,12 +48,11 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
 ### Arquitetura do Sistema
    ```mermaid
    graph TD
-    A[Mensagem Recebida] --&gt; B(Captura via Selenium)
-    B --&gt; C{Processamento Async}
-    C --&gt; D[Socket de Saída]
-    C --&gt; E[Log Estruturado]
-    D --&gt; F[Interface Final]
-<!-- end list -->
+    A[Mensagem Recebida]-->; B(Captura via Selenium)
+    B -->; C{Processamento Async}
+    C -->; D[Socket de Saída]
+    C -->; E[Log Estruturado]
+    D -->; F[Interface Final]
 
 **Características:**
 - **Selenium & Asyncio:** Automação assíncrona e controle de fluxo.
