@@ -5,6 +5,12 @@ import queue
 from multiprocessing import Queue as MPQueue
 
 class Supervisor:
+    """
+    Supervisor para gerenciamento de tarefas assíncronas.
+    
+    Controla execução de robôs externos com limite de workers
+    e comunicação via fila entre threads/processos.
+    """
     def __init__(self, max_workers=4):
         self.job_queue = queue.Queue()
         self.result_queue = MPQueue()  # Comunicação entre threads/processos

@@ -79,6 +79,10 @@ def run_migration():
                         conn.commit()
                         batch_counter = 0
 
+                except mysql.connector.IntegrityError as e:
+                    logging.warning(f"Registro duplicado ignorado: {e}")
+                    conn.rollback()
+                    batch_counter = 0
                 except mysql.connector.Error as e:
                     logging.warning(f"Registro ignorado (erro SQL): {e}")
                     conn.rollback()

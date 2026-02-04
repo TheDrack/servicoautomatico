@@ -21,6 +21,16 @@ TARGET_UPDATE_FREQ = 10 # episódios
 
 # --- ARQUITETURA DA REDE (DQN) ---
 def build_dqn(input_shape, action_space):
+    """
+    Constrói uma Deep Q-Network (DQN) para aprendizado por reforço.
+    
+    Args:
+        input_shape: Formato do estado de entrada.
+        action_space: Número de ações possíveis.
+        
+    Returns:
+        Modelo Keras compilado com otimizador Adam e loss MSE.
+    """
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(128, activation='relu', input_shape=input_shape),
         tf.keras.layers.Dense(64, activation='relu'),
@@ -31,6 +41,12 @@ def build_dqn(input_shape, action_space):
 
 # --- AMBIENTE (LÓGICA DO JOGO) ---
 class SnakeEnv:
+    """
+    Ambiente do jogo Snake para treinamento de RL.
+    
+    Implementa a lógica do jogo com estados normalizados para
+    facilitar o aprendizado da rede neural.
+    """
     def __init__(self, size=10):
         self.size = size
         self.reset()
@@ -68,6 +84,12 @@ class SnakeEnv:
 
 # --- AGENTE (INTELIGÊNCIA) ---
 class DQNAgent:
+    """
+    Agente DQN (Deep Q-Network) que aprende a jogar Snake.
+    
+    Usa experience replay e target network para estabilizar
+    o treinamento de aprendizado por reforço.
+    """
     def __init__(self):
         self.memory = deque(maxlen=BUFFER_SIZE)
         self.epsilon = EPSILON_START

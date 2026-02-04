@@ -34,6 +34,12 @@ RECONNECT_DELAY = 60
 
 # ================= CLASSE PRINCIPAL =================
 class WhatsAppBridge:
+    """
+    WhatsApp Bridge para integração com BotConversa.
+    
+    Gerencia autenticação, conexões WebSocket e persistência de mensagens
+    em tempo real, respeitando LGPD através de anonimização de dados sensíveis.
+    """
 
     def __init__(self):
         self.token: str | None = None
@@ -49,6 +55,7 @@ class WhatsAppBridge:
 
     # ================= LGPD =================
     def _anonymize(self, data: str) -> str:
+        """Anonimiza dados sensíveis usando hash SHA256 com salt."""
         salt = os.getenv("LGPD_SALT", "default_salt")
         return hashlib.sha256(f"{data}{salt}".encode()).hexdigest()[:12]
 
@@ -62,6 +69,15 @@ class WhatsAppBridge:
 
     # ================= SELENIUM =================
     def get_auth_token(self) -> str:
+        """
+        Obtém token de autenticação via Selenium.
+        
+        Returns:
+            str: Token de acesso JWT armazenado no localStorage.
+            
+        Raises:
+            RuntimeError: Se o token não for encontrado após login.
+        """
         logging.info("Autenticando via Selenium...")
 
         options = Options()
@@ -101,6 +117,12 @@ class WhatsAppBridge:
 
     # ================= REQUESTS =================
     def fetch_companies(self) -> list[dict]:
+        """
+        Busca lista de empresas/companhias da franquia.
+        
+        Returns:
+            list[dict]: Lista de companhias com configurações de servidor.
+        """
         logging.info("Sincronizando companhias...")
 
         headers = {"Authorization": f"Bearer {self.token}"}
@@ -115,6 +137,14 @@ class WhatsAppBridge:
 
     # ================= WEBSOCKET =================
     async def listen_socket(self, comp: dict):
+        """
+        Escuta mensagens via WebSocket de uma companhia específica.
+        
+        Args:
+            comp: Dicionário com dados da companhia (server_url, bot, etc.).
+            
+        Mantém conexão persistente com reconexão automática em caso de falha.
+        """
         base_ws = comp["server_url"].replace("http", "ws")
         uri = (
             f"{base_ws}/socket.io/"
@@ -164,6 +194,7 @@ class WhatsAppBridge:
 
     # ================= BANCO =================
     def _persist_data(self, payload: dict):
+        """Persiste dados de mensagem no banco de dados MySQL."""
         chat = payload.get("chat") or {}
         msg = payload.get("mensagem") or {}
 
@@ -174,23 +205,26 @@ class WhatsAppBridge:
             or "[Mídia/Outros]"
         )
 
-        with self._get_db() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    """
-                    INSERT INTO conversas
-                    (nome_consultor, nome_cliente, telefone_cliente, mensagem, data_mensagem)
-                    VALUES (%s, %s, %s, %s, %s)
-                    """,
-                    (
-                        chat.get("isBusyByName"),
-                        chat.get("name"),
-                        (chat.get("id") or "").split("@")[0],
-                        text,
-                        datetime.datetime.utcnow()
+        try:
+            with self._get_db() as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute(
+                        """
+                        INSERT INTO conversas
+                        (nome_consultor, nome_cliente, telefone_cliente, mensagem, data_mensagem)
+                        VALUES (%s, %s, %s, %s, %s)
+                        """,
+                        (
+                            chat.get("isBusyByName"),
+                            chat.get("name"),
+                            (chat.get("id") or "").split("@")[0],
+                            text,
+                            datetime.datetime.utcnow()
+                        )
                     )
-                )
-                conn.commit()
+                    conn.commit()
+        except mysql.connector.Error as e:
+            logging.error(f"Erro ao persistir mensagem: {e}")
 
     # ================= LOOP PRINCIPAL =================
     async def run(self):
