@@ -11,6 +11,12 @@ import uuid
 
 
 class RobotManagerApp:
+    """
+    Gerenciador de Robôs com interface gráfica Tkinter.
+    
+    Permite execução paralela de múltiplos scripts Python com
+    monitoramento em tempo real e controle de processos.
+    """
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Gerenciador de Robôs Pro")
@@ -101,11 +107,13 @@ class RobotManagerApp:
         try:
             runs = int(self.exec_entry.get())
             if runs < 1:
-                raise ValueError
-        except ValueError:
+                raise ValueError("Número de execuções deve ser positivo")
+            if runs > 100:
+                raise ValueError("Número máximo de execuções é 100")
+        except ValueError as e:
             messagebox.showerror(
                 "Erro",
-                "Quantidade inválida. Informe um número inteiro."
+                f"Quantidade inválida: {str(e)}"
             )
             return
 

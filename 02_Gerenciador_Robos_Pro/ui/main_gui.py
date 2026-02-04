@@ -3,6 +3,11 @@ from tkinter import ttk, filedialog
 import queue
 
 class RobotGUI:
+    """
+    Interface gráfica para o Supervisor de Robôs.
+    
+    Fornece visualização de status de jobs e logs em tempo real.
+    """
     def __init__(self, root, supervisor):
         self.root = root
         self.sup = supervisor

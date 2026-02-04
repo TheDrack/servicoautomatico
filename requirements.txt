@@ -2,7 +2,6 @@
 selenium
 websockets
 requests
-asyncio
 
 # Inteligência Artificial e Dados
 tensorflow>=2.10.0

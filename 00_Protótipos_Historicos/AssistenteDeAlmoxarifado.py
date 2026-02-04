@@ -1,4 +1,3 @@
-from re import T
 from tkinter import *
 from tkinter import mainloop
 import pyautogui
@@ -80,12 +79,12 @@ def localizanatela(imagem):
         if local != None:
             pyautogui.moveTo(local)
             print(f'Imagem {imagem} localizada na posição: {local}')
-            return ("sim")
+            return True
 
         #Após n tentativas o programa encerra
         if k >= n:
             print(f'Imagem {imagem} não localizada')
-            return("nao")
+            return False
 
         #Aguarda um pouco para tentar novamente
         time.sleep(0.25)
@@ -196,7 +195,7 @@ def prox ():
 
 def FazerRequisicaoSulfite ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.leftClick(770,90)
@@ -213,7 +212,7 @@ def FazerRequisicaoSulfite ():
 
 def AtualizarInventario ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -225,7 +224,7 @@ def AtualizarInventario ():
         pyautogui.leftClick(585,480)
         pyautogui.leftClick(170,505)
         pyautogui.leftClick(170,600)
-        if "sim" in localizanatela('botaoPDF.PNG'):
+        if localizanatela('botaoPDF.PNG'):
             pyautogui.click()
             pyautogui.leftClick(20,30)
             aperta('home')
@@ -246,7 +245,7 @@ def AtualizarInventario ():
             aperta('tab')
             aperta('tab')
             aperta('tab')
-            digitar('Material 10\Rafael\Consumo.inventario\Dados\inventario.xls')
+            digitar(r'Material 10\Rafael\Consumo.inventario\Dados\inventario.xls')
             aperta('enter')
             aperta('enter')
             pyautogui.leftClick(2000,10)
@@ -258,7 +257,7 @@ def AtualizarInventario ():
 
 def imprimirAjusteDeEstoque ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -270,7 +269,7 @@ def imprimirAjusteDeEstoque ():
         pyautogui.leftClick(585,480)
         pyautogui.leftClick(585,552)
         pyautogui.leftClick(170,600)
-        if "sim" in localizanatela('botaoPDF.PNG'):
+        if localizanatela('botaoPDF.PNG'):
             pyautogui.click()
             pyautogui.leftClick(20,30)
             aperta('home')
@@ -293,11 +292,11 @@ def imprimirAjusteDeEstoque ():
             aperta('enter')
             aperta('tab')
             aperta('tab')
-            digitar('GitHub\ServicoAutomatico\AjusteDeEstoque')
+            digitar(r'GitHub\ServicoAutomatico\AjusteDeEstoque')
             aperta('enter')
             aperta('enter')
             pyautogui.moveTo(1,1)
-            if "sim" in localizanatela('botaoIMPRESSAO.PNG'):
+            if localizanatela('botaoIMPRESSAO.PNG'):
                 pyautogui.click()
             else:
                 pyautogui.alert('botão para impressão não localizado')
@@ -330,7 +329,7 @@ def lancarAjusteDeEstoque ():
 
 def ImprimirBalancete ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -363,9 +362,13 @@ def AbrirAlmox ():
     pyautogui.alert("O código vai começar. Não use nada do seu computador enquanto o código está rodando")
     pyautogui.hotkey('ctrl', 'shift', 'a')
     localizanatela('login4R.PNG')
-    digitar('jesus.anhaia')
+    # NOTA: Credenciais devem ser obtidas de variáveis de ambiente
+    # por segurança. Hardcoded apenas para compatibilidade com versão histórica.
+    usuario = os.getenv('ALMOX_USER', 'jesus.anhaia')
+    senha = os.getenv('ALMOX_PASS', '123456')
+    digitar(usuario)
     aperta('tab')
-    digitar('123456')
+    digitar(senha)
     aperta('enter')
     aperta('enter')
     pyautogui.alert('Almoxarifado 4R Aberto, prossiga manualmente')
@@ -378,13 +381,15 @@ def VisualizarPasta():
 def ConsultarEstoque():
     material = Cod4rMaterial(Ligar_microfone)
     TuplaDeMateriais = excel("/inventario.xls")
+    Quantidade = None
     for codigo,Material,Unid,Mov,Qntd, in TuplaDeMateriais:
         codigo = str(codigo)
         if material in codigo:
-            Quantidade =  Qntd
-        else:
-            falar('Não foi encontrado')
-    return(Quantidade)
+            Quantidade = Qntd
+            break
+    if Quantidade is None:
+        falar('Não foi encontrado')
+    return Quantidade
 
 
 comandos = {"requisição":FazerRequisicaoPT1,"sulfite":FazerRequisicaoSulfite,"planilha":AbrirPlanilha,"inventário":AtualizarInventario,"balancete":ImprimirBalancete,"almoxarifado":AbrirAlmox,"digitar produto":Cod4rMaterial,"digitar quantidade":QuantMaterial,"gaveta":abrirgaveta,"escreva":digitar,"aperte":aperta,"falar":falar,"internet":pyautogui.hotkey('ctrl','shift','c'),"estoque":ConsultarEstoque,"fechar":sys.exit}
@@ -394,68 +399,23 @@ janela = Tk()
 janela.title("Automatização")
 janela.minsize(1500,800)
 
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=0, row=0, padx=5, pady=5)
+# Criação dos botões de forma organizada
+botoes_config = [
+    ("Fazer Requisição", FazerRequisicaoPT1, 0, 1),
+    ("Atualizar Inventario", AtualizarInventario, 1, 1),
+    ("Imprimir Ajuste de Estoque", imprimirAjusteDeEstoque, 1, 3),
+    ("Lançar Ajuste de Estoque", lancarAjusteDeEstoque, 1, 5),
+    ("Imprimir Balancete", ImprimirBalancete, 2, 1),
+    ("Abrir Planilha", AbrirPlanilha, 3, 1),
+    ("Fazer Requisição Sulfite", FazerRequisicaoSulfite, 0, 5),
+    ("Abrir Almoxarifado 4R", AbrirAlmox, 3, 3),
+    ("Abrir Planilha de Gaveta", abrirgaveta, 3, 5),
+    ("Visualizar pasta atual", VisualizarPasta, 4, 3),
+    ("Chamar a Xerife", chamarAXerife, 4, 4),
+]
 
-botao = Button(janela, text="Fazer Requisição", command=FazerRequisicaoPT1)
-botao.grid(column=0, row=1, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=1, row=0, padx=5, pady=5)
-
-botao = Button(janela, text="Atualizar Inventario", command=AtualizarInventario)
-botao.grid(column=1, row=1, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=1, row=2, padx=5, pady=5)
-
-botao = Button(janela, text="Imprimir Ajuste de Estoque", command=imprimirAjusteDeEstoque)
-botao.grid(column=1, row=3, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=1, row=4, padx=5, pady=5)
-
-botao = Button(janela, text="Lançar Ajuste de Estoque", command=lancarAjusteDeEstoque)
-botao.grid(column=1, row=5, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=2, row=0, padx=5, pady=5)
-
-botao = Button(janela, text="Imprimir Balancete", command=ImprimirBalancete)
-botao.grid(column=2, row=1, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=3, row=0, padx=5, pady=5)
-
-botao = Button(janela, text="Abrir Planilha", command=AbrirPlanilha)
-botao.grid(column=3, row=1, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=0, row=2, padx=5, pady=5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=0, row=4, padx=5, pady=5)
-
-botao = Button(janela, text="Fazer Requisição Sulfite", command=FazerRequisicaoSulfite)
-botao.grid(column=0, row=5, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=3, row=2, padx=5, pady=5)
-
-botao = Button(janela, text="Abrir Almoxarifado 4R", command=AbrirAlmox)
-botao.grid(column=3, row=3, padx= 5, pady= 5)
-
-texto_orientacao = Label(janela, text="Clique para executar a ação automatizada")
-texto_orientacao.grid(column=3, row=4, padx=5, pady=5)
-
-botao = Button(janela, text="Abrir Planilha de Gaveta", command=abrirgaveta)
-botao.grid(column=3, row=5, padx= 5, pady= 5)
-
-botao = Button(janela, text="Visualizar pasta atual", command=VisualizarPasta)
-botao.grid(column=4, row=3, padx= 5, pady= 5)
-
-botao = Button(janela, text="Chamar a Xerife", command=chamarAXerife)
-botao.grid(column=4, row=4, padx= 5, pady= 5)
+for texto, comando, col, row in botoes_config:
+    Button(janela, text=texto, command=comando).grid(column=col, row=row, padx=5, pady=5)
 
 def inicio():
     janela.mainloop()
