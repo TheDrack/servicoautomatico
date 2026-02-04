@@ -1,19 +1,42 @@
-# 🤖 Engenharia de Automação & Data Pipeline
+# 🤖 # Serviço Automático — Portfólio Técnico
 
-Repositório focado em soluções de automação de alto nível, transitando desde RPA tradicional até sistemas de migração de dados e IA com aprendizado por reforço.
+Este repositório reúne projetos reais, experimentais e evolutivos que desenvolvi
+ao longo da minha trajetória com **automação de processos, engenharia de sistemas,
+integrações assíncronas e inteligência artificial aplicada**.
+
+Mais do que projetos isolados, este repositório representa uma **linha de evolução técnica**:
+da automação simples à orquestração de robôs, migração de dados em alto volume
+e exploração prática de IA.
+
+O foco aqui **não é código de tutorial**, mas soluções pensadas para
+problemas reais, limitações operacionais e cenários de produção.
 
 ---
 
-## 📂 Estrutura do Projeto
+## 🧠 Áreas de Atuação Exploradas
 
-O repositório está organizado por módulos de complexidade e finalidade:
+- Automação de processos (RPA, scripts inteligentes)
+- Orquestração e gerenciamento de robôs
+- Processamento e migração de dados em grande escala
+- Arquiteturas assíncronas e concorrentes
+- Integrações em tempo real (WebSocket / mensageria)
+- Inteligência Artificial aplicada (Reinforcement Learning)
+- Design evolutivo de sistemas
 
-* **`00_Protótipos_Historicos`**: Legado e evolução das primeiras automações.
-* **`01_Gerenciador_Robos_Simples`**: Gerenciamento básico de scripts RPA.
-* **`02_Gerenciador_Robos_Pro`**: Orquestrador avançado com interface **Tkinter** e multithreading.
-* **`03_High-Volume-Data-Migration`**: Pipelines de ETL e migração massiva de dados com foco em performance.
-* **`04_SnakeIA`**: Agente de IA treinado via Deep Q-Learning (**TensorFlow**).
-* **`whatsapp_bridge.py`**: Bridge de comunicação em tempo real via WebSockets e Selenium.
+---
+
+## 📂 Estrutura do Repositório
+
+### `00_Protótipos_Historicos`
+Protótipos iniciais e versões antigas de soluções de automação.
+
+**Objetivo**
+- Registrar a evolução técnica e arquitetural das ideias
+- Explorar abordagens diferentes antes da consolidação das soluções atuais
+
+**Valor técnico**
+- Demonstra aprendizado incremental
+- Mostra decisões arquiteturais sendo refinadas ao longo do tempo
 
 ---
 
@@ -79,3 +102,15 @@ mysql-connector-python
 
 # Utilitários
 logging
+
+🎯 Filosofia do Repositório
+Este repositório não foi criado para ser um produto final fechado, mas sim para documentar:
+Processo de pensamento
+Evolução técnica
+Decisões arquiteturais
+Soluções para problemas reais
+Ele reflete um perfil voltado a engenharia, não apenas implementação.
+👤 Autor
+Projeto desenvolvido por Jesus Anhaia
+Perfil focado em automação, engenharia de sistemas e IA aplicada.
+“Código é só uma parte do sistema. Entender o problema é o que faz a diferença.”
