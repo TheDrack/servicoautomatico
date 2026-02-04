@@ -24,39 +24,52 @@ Mais do que projetos isolados, este repositório representa uma **linha de evolu
 ### `00_Protótipos_Historicos`
 Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendizado incremental e como decisões arquiteturais foram refinadas ao longo do tempo antes da consolidação das soluções atuais.
 
+### 📁 Projetos Principais
+
+```text
 📂 Projetos
 ├── 01_Gerenciador_Robos_Simples → RPA básico, execução sequencial
 ├── 02_Gerenciador_Robos_Pro → Orquestração, GUI, concorrência
 ├── 03_High-Volume-Data-Migration → ETL e migração massiva
 ├── 04_SnakeIA → Reinforcement Learning
 ---
+Cada projeto possui seu próprio README.md, contendo explicações técnicas, arquitetura e instruções específicas de execução.
 
-## 🚀 Projetos em Destaque
+---
+
+## 🚀 Projeto em Destaque
 
 ### Real-Time WhatsApp Bridge
-Arquitetura híbrida para integração de mensagens:
-* **Selenium & Asyncio:** Automação assíncrona.
-* **WebSockets:** Captura de eventos em tempo real.
-* **LGPD Compliant:** Tratamento ético e seguro de dados sensíveis.
+Arquitetura híbrida para integração e captura de mensagens em tempo real.
+
+**Características:**
+- **Selenium & Asyncio:** Automação assíncrona e controle de fluxo.
+- **WebSockets:** Captura e propagação de eventos em tempo real.
+- **LGPD Compliant:** Tratamento ético e seguro de dados sensíveis.
+
+Este projeto destaca-se pela complexidade arquitetural e pelos desafios reais envolvidos em integrações sensíveis e orientadas a eventos.
 
 ---
 
 ## 🛠️ Stack Tecnológica
-* **Linguagem:** Python 3.9+
-* **IA & Dados:** TensorFlow, NumPy, Pandas.
-* **Automação:** Selenium, Asyncio, Websockets.
-* **Interface:** Tkinter / CustomTkinter.
-* **DevOps:** Docker, `.env` (gestão de secrets), Logging estruturado.
+
+- **Linguagem:** Python 3.9+
+- **Automação & Sistemas:** Selenium, Asyncio
+- **Arquiteturas & Concorrência:** WebSockets, processamento assíncrono
+- **IA & Dados:** TensorFlow, NumPy, Pandas
+- **Interface:** Tkinter / CustomTkinter
+- **DevOps & Infra:** Docker, `.env` (gestão de secrets), logging estruturado
 
 ---
 
 ## 🔧 Configuração e Instalação
 
 ### 🐳 Rodando com Docker (Recomendado)
-Se você tem o Docker instalado, execute:
-  ```bash
-  docker-compose up --build
-```
+
+Com o Docker instalado, execute:
+
+```bash
+docker-compose up --build
 
 ### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
@@ -75,16 +88,24 @@ Se você tem o Docker instalado, execute:
    pip install -r requirements.txt
 
 ---
+---
+
 ## 🎯 Filosofia do Repositório
-Este repositório não foi criado para ser um produto final fechado, mas sim para documentar:
-Processo de pensamento
-Evolução técnica
-Decisões arquiteturais
-Soluções para problemas reais
-Ele reflete um perfil voltado a engenharia, não apenas implementação.
+
+Este repositório não foi criado para ser um produto final fechado, mas para documentar:
+
+- Processo de pensamento  
+- Evolução técnica  
+- Decisões arquiteturais  
+- Soluções para problemas reais  
+
+Ele reflete um perfil voltado à **engenharia de sistemas**, não apenas à implementação de código.
+
+---
 
 ## 👤 Autor
-Projeto desenvolvido por **Jesus Anhaia**
-Perfil focado em automação, engenharia de sistemas e IA aplicada.
-“Código é só uma parte do sistema. Entender o problema é o que faz a diferença.”
 
+Projeto desenvolvido por **Jesus Anhaia**  
+Perfil focado em automação, engenharia de sistemas e IA aplicada.
+
+> *“Código é só uma parte do sistema. Entender o problema é o que faz a diferença.”*
