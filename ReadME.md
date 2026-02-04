@@ -79,7 +79,7 @@ Se você tem o Docker instalado, execute:
    pip install -r requirements.txt
 
 ---
-🎯 Filosofia do Repositório
+##🎯 Filosofia do Repositório##
 Este repositório não foi criado para ser um produto final fechado, mas sim para documentar:
 Processo de pensamento
 Evolução técnica
@@ -87,8 +87,8 @@ Decisões arquiteturais
 Soluções para problemas reais
 Ele reflete um perfil voltado a engenharia, não apenas implementação.
 
-👤 Autor
-Projeto desenvolvido por Jesus Anhaia
+##👤 Autor##
+Projeto desenvolvido por **Jesus Anhaia**
 Perfil focado em automação, engenharia de sistemas e IA aplicada.
 “Código é só uma parte do sistema. Entender o problema é o que faz a diferença.”
 
