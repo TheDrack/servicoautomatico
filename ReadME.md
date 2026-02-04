@@ -65,9 +65,9 @@ Se você tem o Docker instalado, execute:
 ### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
 1. **​Clone o repositório:**
-​   ```bash
+​   ```
    git clone [https://github.com/TheDrack/servicoautomatico.git](https://github.com/TheDrack/servicoautomatico.git)
-```
+
 
 2. **Configure o ambiente:**
    ```bash
