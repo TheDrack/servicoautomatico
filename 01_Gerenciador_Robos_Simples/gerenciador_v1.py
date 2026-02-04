@@ -8,7 +8,7 @@ import tkinter.ttk as ttk
 from tkinter import filedialog, messagebox
 import psutil
 import uuid
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 
 
 class RobotManagerApp:
@@ -24,7 +24,7 @@ class RobotManagerApp:
         self.root.geometry("900x650")
 
         self.robots: Dict[str, Dict[str, Any]] = {}
-        self.log_queue: queue.Queue[tuple[str, str]] = queue.Queue()
+        self.log_queue: "queue.Queue[Tuple[str, str]]" = queue.Queue()
 
         self._build_ui()
         self._consume_logs()

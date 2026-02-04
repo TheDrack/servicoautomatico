@@ -7,7 +7,7 @@ import pyttsx3
 import os
 import sys
 import pandas as pd
-from typing import List, Tuple, Any
+from typing import List, Tuple, Any, Union
 
 
 audio = sr.Recognizer()
@@ -26,7 +26,7 @@ def falar(fala: str) -> None:
 def digitar(texto: str) -> None:
     pyautogui.write(texto)
 
-def aperta(botao: str | List[str]) -> None:
+def aperta(botao: Union[str, List[str]]) -> None:
     pyautogui.press(botao)
 
 def restart() -> None:
