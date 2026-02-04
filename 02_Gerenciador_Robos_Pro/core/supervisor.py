@@ -3,6 +3,8 @@ import threading
 import uuid
 import queue
 from multiprocessing import Queue as MPQueue
+from typing import Callable, Dict, Any, Tuple, Union
+
 
 class Supervisor:
     """
@@ -11,18 +13,18 @@ class Supervisor:
     Controla execução de robôs externos com limite de workers
     e comunicação via fila entre threads/processos.
     """
-    def __init__(self, max_workers=4):
-        self.job_queue = queue.Queue()
-        self.result_queue = MPQueue()  # Comunicação entre threads/processos
-        self.active_jobs = {}
+    def __init__(self, max_workers: int = 4) -> None:
+        self.job_queue: "queue.Queue[Tuple[str, str, Union[str, Callable]]]" = queue.Queue()
+        self.result_queue: "MPQueue[Dict[str, Any]]" = MPQueue()  # Comunicação entre threads/processos
+        self.active_jobs: Dict[str, threading.Thread] = {}
         self.max_workers = max_workers
 
-    def submit_task(self, name, path_or_func):
+    def submit_task(self, name: str, path_or_func: Union[str, Callable]) -> str:
         job_id = f"{name}_{uuid.uuid4().hex[:4]}"
         self.job_queue.put((job_id, name, path_or_func))
         return job_id
 
-    def tick(self):
+    def tick(self) -> None:
         """Monitora e lança novos jobs. Pode ser chamado por GUI ou Voz."""
         while len(self.active_jobs) < self.max_workers and not self.job_queue.empty():
             job_id, name, task = self.job_queue.get()
@@ -32,7 +34,7 @@ class Supervisor:
             t.start()
             self.active_jobs[job_id] = t
 
-    def _execute_external(self, job_id, path):
+    def _execute_external(self, job_id: str, path: str) -> None:
         try:
             process = subprocess.Popen(
                 ["python", "-u", path],

@@ -31,7 +31,7 @@ logging.basicConfig(
 
 
 # ================= MIGRATION =================
-def run_migration():
+def run_migration() -> None:
     if not MDB_PATH or not TABLE_NAME:
         logging.critical("MDB_PATH ou TABLE_NAME não configurados no .env")
         return

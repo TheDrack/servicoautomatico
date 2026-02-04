@@ -5,6 +5,8 @@ import pygame
 import gym
 import sys
 from collections import deque
+from typing import Tuple, List, Deque
+
 
 # --- CONFIGURAÇÕES E HIPERPARÂMETROS ---
 ENV_SIZE = 10
@@ -20,7 +22,7 @@ EPSILON_DECAY = 0.995
 TARGET_UPDATE_FREQ = 10 # episódios
 
 # --- ARQUITETURA DA REDE (DQN) ---
-def build_dqn(input_shape, action_space):
+def build_dqn(input_shape: Tuple[int, ...], action_space: int) -> tf.keras.Sequential:
     """
     Constrói uma Deep Q-Network (DQN) para aprendizado por reforço.
     
@@ -47,24 +49,24 @@ class SnakeEnv:
     Implementa a lógica do jogo com estados normalizados para
     facilitar o aprendizado da rede neural.
     """
-    def __init__(self, size=10):
+    def __init__(self, size: int = 10) -> None:
         self.size = size
         self.reset()
 
-    def reset(self):
+    def reset(self) -> np.ndarray:
         self.snake = [self.size//2, self.size//2]
         self.food = [random.randint(0, self.size-1), random.randint(0, self.size-1)]
         self.done = False
         return self._get_state()
 
-    def _get_state(self):
+    def _get_state(self) -> np.ndarray:
         # Distância relativa normalizada ajuda a rede a aprender mais rápido
         return np.array([
             self.food[0] - self.snake[0],
             self.food[1] - self.snake[1]
         ], dtype=np.float32)
 
-    def step(self, action):
+    def step(self, action: int) -> Tuple[np.ndarray, int, bool]:
         # 0: Dir, 1: Esq, 2: Baixo, 3: Cima
         moves = {0: [0, 1], 1: [0, -1], 2: [1, 0], 3: [-1, 0]}
         move = moves[action]
@@ -90,23 +92,23 @@ class DQNAgent:
     Usa experience replay e target network para estabilizar
     o treinamento de aprendizado por reforço.
     """
-    def __init__(self):
-        self.memory = deque(maxlen=BUFFER_SIZE)
+    def __init__(self) -> None:
+        self.memory: Deque[Tuple[np.ndarray, int, int, np.ndarray, bool]] = deque(maxlen=BUFFER_SIZE)
         self.epsilon = EPSILON_START
         self.model = build_dqn(STATE_SHAPE, ACTIONS)
         self.target_model = build_dqn(STATE_SHAPE, ACTIONS)
         self.update_target()
 
-    def update_target(self):
+    def update_target(self) -> None:
         self.target_model.set_weights(self.model.get_weights())
 
-    def act(self, state):
+    def act(self, state: np.ndarray) -> int:
         if np.random.rand() <= self.epsilon:
             return random.randrange(ACTIONS)
         act_values = self.model.predict(state.reshape(1, *STATE_SHAPE), verbose=0)
         return np.argmax(act_values[0])
 
-    def train(self):
+    def train(self) -> None:
         if len(self.memory) < BATCH_SIZE:
             return
 
@@ -135,7 +137,7 @@ class DQNAgent:
             self.epsilon *= EPSILON_DECAY
 
 # --- EXECUÇÃO E VISUALIZAÇÃO ---
-def main():
+def main() -> None:
     pygame.init()
     screen = pygame.display.set_mode((400, 400))
     clock = pygame.time.Clock()
