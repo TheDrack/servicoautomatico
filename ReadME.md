@@ -60,7 +60,7 @@ Arquitetura híbrida para integração de mensagens:
 Se você tem o Docker instalado, execute:
   ```bash
   docker-compose up --build
-
+```
 
 ### 🐍 Instalação Manual
 ​Caso prefira rodar localmente:
