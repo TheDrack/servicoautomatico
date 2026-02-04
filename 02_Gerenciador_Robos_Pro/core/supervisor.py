@@ -41,4 +41,4 @@ class Supervisor:
         except Exception as e:
             self.result_queue.put({"job_id": job_id, "type": "status", "data": f"Erro: {e}"})
         finally:
-            if job_id in self.active_jobs: del self.active_processes[job_id] # Limpeza básica
+            if job_id in self.active_jobs: del self.active_jobs[job_id] # Limpeza básica

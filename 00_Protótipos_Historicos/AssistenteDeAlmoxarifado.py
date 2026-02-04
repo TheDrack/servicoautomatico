@@ -1,4 +1,3 @@
-from re import T
 from tkinter import *
 from tkinter import mainloop
 import pyautogui
@@ -80,12 +79,12 @@ def localizanatela(imagem):
         if local != None:
             pyautogui.moveTo(local)
             print(f'Imagem {imagem} localizada na posição: {local}')
-            return ("sim")
+            return True
 
         #Após n tentativas o programa encerra
         if k >= n:
             print(f'Imagem {imagem} não localizada')
-            return("nao")
+            return False
 
         #Aguarda um pouco para tentar novamente
         time.sleep(0.25)
@@ -196,7 +195,7 @@ def prox ():
 
 def FazerRequisicaoSulfite ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.leftClick(770,90)
@@ -213,7 +212,7 @@ def FazerRequisicaoSulfite ():
 
 def AtualizarInventario ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -225,7 +224,7 @@ def AtualizarInventario ():
         pyautogui.leftClick(585,480)
         pyautogui.leftClick(170,505)
         pyautogui.leftClick(170,600)
-        if "sim" in localizanatela('botaoPDF.PNG'):
+        if localizanatela('botaoPDF.PNG'):
             pyautogui.click()
             pyautogui.leftClick(20,30)
             aperta('home')
@@ -258,7 +257,7 @@ def AtualizarInventario ():
 
 def imprimirAjusteDeEstoque ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -270,7 +269,7 @@ def imprimirAjusteDeEstoque ():
         pyautogui.leftClick(585,480)
         pyautogui.leftClick(585,552)
         pyautogui.leftClick(170,600)
-        if "sim" in localizanatela('botaoPDF.PNG'):
+        if localizanatela('botaoPDF.PNG'):
             pyautogui.click()
             pyautogui.leftClick(20,30)
             aperta('home')
@@ -297,7 +296,7 @@ def imprimirAjusteDeEstoque ():
             aperta('enter')
             aperta('enter')
             pyautogui.moveTo(1,1)
-            if "sim" in localizanatela('botaoIMPRESSAO.PNG'):
+            if localizanatela('botaoIMPRESSAO.PNG'):
                 pyautogui.click()
             else:
                 pyautogui.alert('botão para impressão não localizado')
@@ -330,7 +329,7 @@ def lancarAjusteDeEstoque ():
 
 def ImprimirBalancete ():
     pyautogui.PAUSE = 0.4
-    if "sim" in localizanatela('botaoALMOX.PNG'):
+    if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
         pyautogui.leftClick(200,50)
         pyautogui.doubleClick(100,270)
@@ -378,13 +377,15 @@ def VisualizarPasta():
 def ConsultarEstoque():
     material = Cod4rMaterial(Ligar_microfone)
     TuplaDeMateriais = excel("/inventario.xls")
+    Quantidade = None
     for codigo,Material,Unid,Mov,Qntd, in TuplaDeMateriais:
         codigo = str(codigo)
         if material in codigo:
-            Quantidade =  Qntd
-        else:
-            falar('Não foi encontrado')
-    return(Quantidade)
+            Quantidade = Qntd
+            break
+    if Quantidade is None:
+        falar('Não foi encontrado')
+    return Quantidade
 
 
 comandos = {"requisição":FazerRequisicaoPT1,"sulfite":FazerRequisicaoSulfite,"planilha":AbrirPlanilha,"inventário":AtualizarInventario,"balancete":ImprimirBalancete,"almoxarifado":AbrirAlmox,"digitar produto":Cod4rMaterial,"digitar quantidade":QuantMaterial,"gaveta":abrirgaveta,"escreva":digitar,"aperte":aperta,"falar":falar,"internet":pyautogui.hotkey('ctrl','shift','c'),"estoque":ConsultarEstoque,"fechar":sys.exit}
