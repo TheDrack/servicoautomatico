@@ -1,5 +1,12 @@
 # 🤖 Serviço Automático — Portfólio Técnico
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Selenium](https://img.shields.io/badge/-selenium-%43B02A?style=for-the-badge&logo=selenium&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
+
 Este repositório reúne projetos reais, experimentais e evolutivos que desenvolvi ao longo da minha trajetória com **automação de processos, engenharia de sistemas, integrações assíncronas e inteligência artificial aplicada**.
 
 Mais do que projetos isolados, este repositório representa uma **linha de evolução técnica**: da automação simples à orquestração de robôs, migração de dados em alto volume e exploração prática de IA.
