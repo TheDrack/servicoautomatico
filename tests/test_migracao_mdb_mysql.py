@@ -74,11 +74,19 @@ def test_batch_commit_logic():
 
 
 def test_batch_counter_reset():
-    """Testa reset do contador de lote"""
-    # Simula reset após commit
-    batch_counter = 1000
+    """Testa reset do contador de lote após commit"""
+    # Simula ciclo completo: incremento até limite e reset
     batch_counter = 0
+    batch_size = 1000
     
+    # Simula 1000 inserções
+    for _ in range(1000):
+        batch_counter += 1
+    
+    assert batch_counter == batch_size
+    
+    # Reset após commit
+    batch_counter = 0
     assert batch_counter == 0
 
 

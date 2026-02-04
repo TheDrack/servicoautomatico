@@ -98,15 +98,21 @@ def test_food_detection():
 
 
 def test_reward_calculation():
-    """Testa cálculo de recompensas"""
-    # Recompensa por comer
-    reward_eat = 10
-    assert reward_eat == 10
+    """Testa cálculo de recompensas baseado em cenários"""
+    # Simula lógica de recompensas do step()
     
-    # Penalidade por morrer
-    reward_die = -10
-    assert reward_die == -10
+    # Cenário 1: Snake come comida
+    snake_ate_food = True
+    reward = 10 if snake_ate_food else 0
+    assert reward == 10
     
-    # Recompensa neutra
-    reward_neutral = 0
-    assert reward_neutral == 0
+    # Cenário 2: Snake colide com parede
+    snake_died = True
+    reward = -10 if snake_died else 0
+    assert reward == -10
+    
+    # Cenário 3: Movimento normal sem evento
+    snake_ate_food = False
+    snake_died = False
+    reward = 10 if snake_ate_food else (-10 if snake_died else 0)
+    assert reward == 0

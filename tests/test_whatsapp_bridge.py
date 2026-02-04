@@ -9,15 +9,16 @@ import os
 
 def test_anonymize_logic():
     """Testa a lógica de anonimização de dados"""
-    # Simula a lógica do método _anonymize
-    data = "sensitive_data"
-    salt = "test_salt"
-    expected = hashlib.sha256(f"{data}{salt}".encode()).hexdigest()[:12]
-    
+    # Simula a lógica do método _anonymize com valor conhecido
+    data = "test"
+    salt = "salt"
     result = hashlib.sha256(f"{data}{salt}".encode()).hexdigest()[:12]
     
-    assert result == expected
+    # Verifica propriedades do hash gerado
     assert len(result) == 12
+    assert isinstance(result, str)
+    # Hash conhecido para esta entrada específica
+    assert result == "4edf07edc95b"
 
 
 def test_anonymize_different_data():
