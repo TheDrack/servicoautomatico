@@ -24,15 +24,11 @@ Mais do que projetos isolados, este repositório representa uma **linha de evolu
 ### `00_Protótipos_Historicos`
 Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendizado incremental e como decisões arquiteturais foram refinadas ao longo do tempo antes da consolidação das soluções atuais.
 
-### `02_Gerenciador_Robos_Pro`
-Orquestrador avançado com interface gráfica (GUI) e suporte a multithreading para execução simultânea de agentes.
-
-### `03_High-Volume-Data-Migration`
-Pipeline focado em performance para movimentação massiva de dados com tratamento de integridade.
-
-### `04_SnakeIA`
-Estudo prático de **Reinforcement Learning** utilizando Deep Q-Networks para treinamento de agentes autônomos.
-
+📂 Projetos
+├── 01_Gerenciador_Robos_Simples → RPA básico, execução sequencial
+├── 02_Gerenciador_Robos_Pro → Orquestração, GUI, concorrência
+├── 03_High-Volume-Data-Migration → ETL e migração massiva
+├── 04_SnakeIA → Reinforcement Learning
 ---
 
 ## 🚀 Projetos em Destaque
