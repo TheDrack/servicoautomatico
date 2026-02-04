@@ -5,6 +5,8 @@
 ![Selenium](https://img.shields.io/badge/-selenium-%43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Tests Status](https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO/actions/workflows/tests.yml/badge.svg)
+
 
 
 Este repositório reúne projetos reais, experimentais e evolutivos que desenvolvi ao longo da minha trajetória com **automação de processos, engenharia de sistemas, integrações assíncronas e inteligência artificial aplicada**.
