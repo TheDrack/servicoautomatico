@@ -52,7 +52,7 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
     B -->; C{Processamento Async}
     C -->; D[Socket de Saída]
     C -->; E[Log Estruturado]
-    D -->; F[Interface Final]
+    D -->; F[Interface Final] ```
 
 **Características:**
 - **Selenium & Asyncio:** Automação assíncrona e controle de fluxo.
