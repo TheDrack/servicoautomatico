@@ -38,7 +38,7 @@ class RobotGUI:
         if path:
             name = path.split("/")[-1]
             job_id = self.sup.submit_task(name, path)
-            self.tree.insert("", "end", iid=job_id, text=job_id, values=("Aguardando..."))
+            self.tree.insert("", "end", iid=job_id, text=job_id, values=("Aguardando...",))
 
     def update_loop(self) -> None:
         self.sup.tick()

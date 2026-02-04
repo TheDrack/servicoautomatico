@@ -3,7 +3,7 @@ import threading
 import uuid
 import queue
 from multiprocessing import Queue as MPQueue
-from typing import Callable
+from typing import Callable, Dict, Any
 
 
 class Supervisor:
@@ -14,9 +14,9 @@ class Supervisor:
     e comunicação via fila entre threads/processos.
     """
     def __init__(self, max_workers: int = 4) -> None:
-        self.job_queue = queue.Queue()
-        self.result_queue = MPQueue()  # Comunicação entre threads/processos
-        self.active_jobs = {}
+        self.job_queue: queue.Queue[tuple[str, str, str | Callable]] = queue.Queue()
+        self.result_queue: MPQueue[Dict[str, Any]] = MPQueue()  # Comunicação entre threads/processos
+        self.active_jobs: Dict[str, threading.Thread] = {}
         self.max_workers = max_workers
 
     def submit_task(self, name: str, path_or_func: str | Callable) -> str:

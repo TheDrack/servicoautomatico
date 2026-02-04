@@ -23,8 +23,8 @@ class RobotManagerApp:
         self.root.title("Gerenciador de Robôs Pro")
         self.root.geometry("900x650")
 
-        self.robots = {}
-        self.log_queue = queue.Queue()
+        self.robots: Dict[str, Dict[str, Any]] = {}
+        self.log_queue: queue.Queue[tuple[str, str]] = queue.Queue()
 
         self._build_ui()
         self._consume_logs()

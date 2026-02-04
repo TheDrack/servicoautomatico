@@ -5,7 +5,7 @@ import pygame
 import gym
 import sys
 from collections import deque
-from typing import Tuple, List
+from typing import Tuple, List, Deque
 
 
 # --- CONFIGURAÇÕES E HIPERPARÂMETROS ---
@@ -93,7 +93,7 @@ class DQNAgent:
     o treinamento de aprendizado por reforço.
     """
     def __init__(self) -> None:
-        self.memory = deque(maxlen=BUFFER_SIZE)
+        self.memory: Deque[Tuple[np.ndarray, int, int, np.ndarray, bool]] = deque(maxlen=BUFFER_SIZE)
         self.epsilon = EPSILON_START
         self.model = build_dqn(STATE_SHAPE, ACTIONS)
         self.target_model = build_dqn(STATE_SHAPE, ACTIONS)
