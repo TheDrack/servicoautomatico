@@ -43,10 +43,16 @@ Registro da evolução técnica e arquitetural das ideias. Demonstra o aprendiza
 **Cada projeto possui seu próprio README.md, contendo explicações técnicas, arquitetura e instruções específicas de execução.**
 
 ---
-## 🚀 Projeto em Destaque
+## 🚀 Projeto em Destaque: Real-Time WhatsApp Bridge
 
-### Real-Time WhatsApp Bridge
-Arquitetura híbrida para integração e captura de mensagens em tempo real.
+### Arquitetura do Sistema
+```mermaid
+graph TD
+    A[Mensagem Recebida] --&gt; B(Captura via Selenium)
+    B --&gt; C{Processamento Async}
+    C --&gt; D[Socket de Saída]
+    C --&gt; E[Log Estruturado]
+    D --&gt; F[Interface Final]
 
 **Características:**
 - **Selenium & Asyncio:** Automação assíncrona e controle de fluxo.
