@@ -1,4 +1,4 @@
-#Este arquivo deve conter todas as bibliotecas necessárias para rodar tanto a IA quanto o Bridge e a Interface. 
+# Este arquivo deve conter todas as bibliotecas necessárias para rodar tanto a IA quanto o Bridge e a Interface. 
 
 ```text
 # Automação e Web
