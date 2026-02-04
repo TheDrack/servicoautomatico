@@ -92,27 +92,3 @@ Projeto desenvolvido por **Jesus Anhaia**
 Perfil focado em automação, engenharia de sistemas e IA aplicada.
 “Código é só uma parte do sistema. Entender o problema é o que faz a diferença.”
 
-___
-
-### 2. `requirements.txt` (Consolidado)
-Este arquivo deve conter todas as bibliotecas necessárias para rodar tanto a IA quanto o Bridge e a Interface. 
-
-```text
-# Automação e Web
-selenium
-websockets
-requests
-asyncio
-
-# Inteligência Artificial e Dados
-tensorflow>=2.10.0
-numpy
-pandas
-
-# Interface e Sistema
-customtkinter
-python-dotenv
-mysql-connector-python
-
-# Utilitários
-logging
