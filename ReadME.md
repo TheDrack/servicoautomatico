@@ -49,7 +49,7 @@ Estudo de **Reinforcement Learning**:
 2. **Configure o ambiente:**
    ```bash
    cp .env.example .env
-# Edite o .env com suas credenciais
+ Edite o .env com suas credenciais
 
 3. **Instale as dependências:**
    ```bash
