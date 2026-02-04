@@ -8,6 +8,7 @@ import tkinter.ttk as ttk
 from tkinter import filedialog, messagebox
 import psutil
 import uuid
+from typing import Dict, Any
 
 
 class RobotManagerApp:
@@ -17,7 +18,7 @@ class RobotManagerApp:
     Permite execução paralela de múltiplos scripts Python com
     monitoramento em tempo real e controle de processos.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.root = tk.Tk()
         self.root.title("Gerenciador de Robôs Pro")
         self.root.geometry("900x650")
@@ -30,7 +31,7 @@ class RobotManagerApp:
 
     # ---------------- UI ---------------- #
 
-    def _build_ui(self):
+    def _build_ui(self) -> None:
         frame_top = tk.Frame(self.root)
         frame_top.pack(pady=10, fill=tk.X)
 
@@ -97,7 +98,7 @@ class RobotManagerApp:
 
     # ---------------- Robot Control ---------------- #
 
-    def add_robot(self):
+    def add_robot(self) -> None:
         robot_file = filedialog.askopenfilename(
             filetypes=[("Python files", "*.py")]
         )
@@ -122,7 +123,7 @@ class RobotManagerApp:
 
         self._update_status_bar()
 
-    def start_robot(self, robot_file):
+    def start_robot(self, robot_file: str) -> None:
         robot_name = os.path.basename(robot_file)
         robot_id = f"{robot_name}_{uuid.uuid4().hex[:6]}"
 
@@ -159,7 +160,7 @@ class RobotManagerApp:
             daemon=True
         ).start()
 
-    def stop_selected_robot(self):
+    def stop_selected_robot(self) -> None:
         selected = self.tree.selection()
         if not selected:
             return
@@ -178,7 +179,7 @@ class RobotManagerApp:
 
         self._kill_robot(robot_id)
 
-    def _kill_robot(self, robot_id):
+    def _kill_robot(self, robot_id: str) -> None:
         if robot_id not in self.robots:
             return
 
@@ -200,7 +201,7 @@ class RobotManagerApp:
         finally:
             self._mark_as_finished(robot_id, manual=True)
 
-    def _mark_as_finished(self, robot_id, manual=False):
+    def _mark_as_finished(self, robot_id: str, manual: bool = False) -> None:
         if robot_id not in self.robots:
             return
 
@@ -212,7 +213,7 @@ class RobotManagerApp:
 
         self._update_status_bar()
 
-    def clear_finished(self):
+    def clear_finished(self) -> None:
         to_remove = []
 
         for rid, data in self.robots.items():
@@ -230,7 +231,7 @@ class RobotManagerApp:
 
     # ---------------- Logs & Monitoring ---------------- #
 
-    def _read_output(self, robot_id, process):
+    def _read_output(self, robot_id: str, process: subprocess.Popen) -> None:
         try:
             for line in iter(process.stdout.readline, ''):
                 if line:
@@ -239,7 +240,7 @@ class RobotManagerApp:
             process.wait()
             self.log_queue.put((robot_id, "__PROCESS_FINISHED__"))
 
-    def _consume_logs(self):
+    def _consume_logs(self) -> None:
         try:
             while True:
                 robot_id, message = self.log_queue.get_nowait()
@@ -258,7 +259,7 @@ class RobotManagerApp:
 
         self.root.after(100, self._consume_logs)
 
-    def _update_status_bar(self):
+    def _update_status_bar(self) -> None:
         ativos = sum(
             1 for r in self.robots.values()
             if self.tree.set(r["tree_id"], "Status") == "Rodando"
@@ -268,7 +269,7 @@ class RobotManagerApp:
             f"Robôs Ativos: {ativos} | Total no Histórico: {len(self.robots)}"
         )
 
-    def run(self):
+    def run(self) -> None:
         self.root.mainloop()
 
 

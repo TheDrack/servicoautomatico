@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import ttk, filedialog
 import queue
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from core.supervisor import Supervisor
+
 
 class RobotGUI:
     """
@@ -8,12 +13,12 @@ class RobotGUI:
     
     Fornece visualização de status de jobs e logs em tempo real.
     """
-    def __init__(self, root, supervisor):
+    def __init__(self, root: tk.Tk, supervisor: "Supervisor") -> None:
         self.root = root
         self.sup = supervisor
         self._build_ui()
 
-    def _build_ui(self):
+    def _build_ui(self) -> None:
         self.root.title("Gerenciador Pro 2.0")
         
         # Tabela
@@ -28,14 +33,14 @@ class RobotGUI:
 
         tk.Button(self.root, text="Adicionar Robô", command=self.add_job).pack(pady=5)
 
-    def add_job(self):
+    def add_job(self) -> None:
         path = filedialog.askopenfilename(filetypes=[("Python", "*.py")])
         if path:
             name = path.split("/")[-1]
             job_id = self.sup.submit_task(name, path)
             self.tree.insert("", "end", iid=job_id, text=job_id, values=("Aguardando..."))
 
-    def update_loop(self):
+    def update_loop(self) -> None:
         self.sup.tick()
         try:
             while True:

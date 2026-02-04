@@ -7,32 +7,34 @@ import pyttsx3
 import os
 import sys
 import pandas as pd
+from typing import List, Tuple, Any
+
 
 audio = sr.Recognizer()
 maquina = pyttsx3.init()
 
 
-def avisar(fala):
+def avisar(fala: str) -> None:
     print(fala)
     falar(fala)
     pyautogui.alert(fala)
 
-def falar (fala):
+def falar(fala: str) -> None:
     maquina.say(fala)
     maquina.runAndWait()
 
-def digitar (texto):
+def digitar(texto: str) -> None:
     pyautogui.write(texto)
 
-def aperta (botao):
+def aperta(botao: str | List[str]) -> None:
     pyautogui.press(botao)
 
-def restart():
+def restart() -> None:
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
 
-def Ligar_microfone ():
+def Ligar_microfone() -> str:
 
     with sr.Microphone() as fonte:
 
@@ -55,16 +57,18 @@ def Ligar_microfone ():
             else :
                 return (comando)
 
-def chamarAXerife ():
+def chamarAXerife() -> None:
     os.startfile(os.path.dirname(os.path.realpath(__file__)) + r"\assistente.pyw")
 
-def pedircomando():
+def pedircomando() -> None:
     falar('Diga um comando')
     ordem = Ligar_microfone()
     comandos(ordem)
 
 tempoDeEspera = 7.5
-def localizanatela(imagem):
+
+
+def localizanatela(imagem: str) -> bool:
     caminho = os.path.dirname(os.path.realpath(__file__)) + r'\imagens'
     arquivo = imagem
     k = 0
@@ -90,29 +94,29 @@ def localizanatela(imagem):
         time.sleep(0.25)
         k += 1
 
-def excel (LocalExcel):
+def excel(LocalExcel: str) -> List[Tuple[Any, ...]]:
     df = pd.read_excel(LocalExcel)
     out = df.to_numpy().tolist()
     Tupla = [tuple(elt) for elt in out]
     return Tupla
 
-def abrirgaveta ():
+def abrirgaveta() -> None:
     pyautogui.hotkey('ctrl','shift','g')
 
-def FazerRequisicaoPT1 ():
+def FazerRequisicaoPT1() -> None:
     mic = Ligar_microfone
     AbrirRequisicao()
     EscolherCentroDeCusto(mic)
     descritivoRequisicao(mic)
     AnotacaoRequisicao(mic)
     FazerRequisicaoPT2()
-def FazerRequisicaoPT2 ():
+def FazerRequisicaoPT2() -> None:
     mic = Ligar_microfone
     digitar(Cod4rMaterial(mic))
     QuantMaterial(mic)
     AlgoMais(mic)
 
-def AbrirRequisicao ():
+def AbrirRequisicao() -> None:
     falar('Irá inicializar uma requisição automatizada, não clique em nada')
     pyautogui.PAUSE = 0.4
     if localizanatela('botaoALMOX.PNG') == True:
@@ -129,7 +133,7 @@ def AbrirRequisicao ():
     else :
         pyautogui.alert("botão não localizado")
 
-def EscolherCentroDeCusto (CC):
+def EscolherCentroDeCusto(CC: str) -> None:
     falar('Qual centro de custo será o destinatário?')
     TuplaDeCC = excel(r"ServicoAutomatico\Lista de CC.xlsx")
     for codigo,escrito in TuplaDeCC:
@@ -141,14 +145,14 @@ def EscolherCentroDeCusto (CC):
     aperta('enter')
 
 
-def descritivoRequisicao (desc):
+def descritivoRequisicao(desc: str) -> None:
     falar('Diga o descritivo')
     desc = desc.upper()
     digitar(desc)
     aperta('enter')
 
 
-def AnotacaoRequisicao(AC):
+def AnotacaoRequisicao(AC: str) -> None:
     falar('Está aos cuidados de qual solicitante?')
 
     AC = AC.upper()
@@ -157,7 +161,7 @@ def AnotacaoRequisicao(AC):
 
 
 
-def Cod4rMaterial (escolher):
+def Cod4rMaterial(escolher: str) -> str:
     falar('Diga o material')
     Material = escolher
     TuplaDeMateriais = excel(os.path.dirname(os.path.realpath(__file__)) + r"\Lista de Materiais.xlsx")
@@ -168,7 +172,7 @@ def Cod4rMaterial (escolher):
     return(Material)
 
 
-def QuantMaterial (Quantidade):
+def QuantMaterial(Quantidade: str) -> None:
     falar('Fale a quantidade')
     if 'pular' in Quantidade:
         prox()
@@ -178,7 +182,7 @@ def QuantMaterial (Quantidade):
     digitar(Quantidade)
 
 
-def AlgoMais(resposta):
+def AlgoMais(resposta: str) -> None:
     falar('Algo mais?')
     if 'sim' in resposta:
         FazerRequisicaoPT2()
@@ -188,12 +192,12 @@ def AlgoMais(resposta):
     else :
         falar('Não entendi')
 
-def prox ():
+def prox() -> None:
     aperta('enter')
     digitar('1')
     aperta('enter')
 
-def FazerRequisicaoSulfite ():
+def FazerRequisicaoSulfite() -> None:
     pyautogui.PAUSE = 0.4
     if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
@@ -210,7 +214,7 @@ def FazerRequisicaoSulfite ():
     else :
         pyautogui.alert('botão de Almoxarifado 4R não encontrado')
 
-def AtualizarInventario ():
+def AtualizarInventario() -> None:
     pyautogui.PAUSE = 0.4
     if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
@@ -255,7 +259,7 @@ def AtualizarInventario ():
     else: 
         pyautogui.alert('botão ALMOX não encontrado')
 
-def imprimirAjusteDeEstoque ():
+def imprimirAjusteDeEstoque() -> None:
     pyautogui.PAUSE = 0.4
     if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
@@ -305,7 +309,7 @@ def imprimirAjusteDeEstoque ():
     else: 
         pyautogui.alert('botão ALMOX não encontrado')
 
-def lancarAjusteDeEstoque ():
+def lancarAjusteDeEstoque() -> None:
     AbrirRequisicao()
     digitar('451')
     pyautogui.press('enter')
@@ -327,7 +331,7 @@ def lancarAjusteDeEstoque ():
                 aperta('enter')
     avisar("Lançamento de ajuste de estoque concluido")
 
-def ImprimirBalancete ():
+def ImprimirBalancete() -> None:
     pyautogui.PAUSE = 0.4
     if localizanatela('botaoALMOX.PNG'):
         pyautogui.click()
@@ -344,7 +348,7 @@ def ImprimirBalancete ():
     else:
         pyautogui.alert("botão não localizado")
 
-def AbrirPlanilha ():
+def AbrirPlanilha() -> None:
     pyautogui.PAUSE = 0.4
     pyautogui.hotkey('ctrl', 'shift', 'i')
     pyautogui.alert('ESPERE. Clique em Ok quando a planilha abrir para não dar erro')
@@ -357,7 +361,7 @@ def AbrirPlanilha ():
     pyautogui.hotkey('win','left')
     pyautogui.alert('Automatização concluida, continue manualmente')
 
-def AbrirAlmox ():
+def AbrirAlmox() -> None:
     pyautogui.PAUSE = 0.8
     pyautogui.alert("O código vai começar. Não use nada do seu computador enquanto o código está rodando")
     pyautogui.hotkey('ctrl', 'shift', 'a')
@@ -373,12 +377,12 @@ def AbrirAlmox ():
     aperta('enter')
     pyautogui.alert('Almoxarifado 4R Aberto, prossiga manualmente')
 
-def VisualizarPasta():
+def VisualizarPasta() -> None:
 
     pyautogui.alert(os.getcwd())
     pyautogui.alert(os.path.dirname(os.path.realpath(__file__)))
 
-def ConsultarEstoque():
+def ConsultarEstoque() -> Any:
     material = Cod4rMaterial(Ligar_microfone)
     TuplaDeMateriais = excel("/inventario.xls")
     Quantidade = None
@@ -417,6 +421,6 @@ botoes_config = [
 for texto, comando, col, row in botoes_config:
     Button(janela, text=texto, command=comando).grid(column=col, row=row, padx=5, pady=5)
 
-def inicio():
+def inicio() -> None:
     janela.mainloop()
 inicio()
